@@ -79,8 +79,17 @@ public class ExerciseRunner implements CommandLineRunner {
                 + ", hasPrevious=" + page.hasPrevious());
     }
 
-    // todo8() ... todo24() viết ở các TODO bên dưới
-    private void todo8() {}
+    // ===== TODO 8 =====
+    private void todo8() {
+        title("TODO 8: findBy / existsBy / countBy");
+        for (String code : java.util.List.of("AI002", "XX999")) {
+            System.out.println("findByStudentCode(" + code + ") -> " +
+                    studentService.findByStudentCode(code).map(Object::toString).orElse("Not found"));
+        }
+        System.out.println("isEmailExisted(binh.tt@fpt.edu.vn) -> "
+                + studentService.isEmailExisted("binh.tt@fpt.edu.vn"));
+        System.out.println("countActive -> " + studentService.countActive());
+    }
     private void todo9() {}
     private void todo10() {}
     private void todo11() {}
