@@ -11,4 +11,6 @@ public interface DepartmentService {
     boolean existsById(Long id);                                     // TODO 6
     List<Department> findDepartmentsWithoutStudents();               // TODO 11d
     List<DepartmentStatDTO> getStatistics();                         // TODO 14
+    Optional<Department> findByCode(String code);                    // TODO 16a
+    Department getWithStudents(String code);                         // TODO 16b
 }
