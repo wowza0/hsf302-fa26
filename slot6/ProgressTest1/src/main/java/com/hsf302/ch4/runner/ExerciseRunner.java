@@ -90,7 +90,13 @@ public class ExerciseRunner implements CommandLineRunner {
                 + studentService.isEmailExisted("binh.tt@fpt.edu.vn"));
         System.out.println("countActive -> " + studentService.countActive());
     }
-    private void todo9() {}
+    // ===== TODO 9 =====
+    private void todo9() {
+        title("TODO 9: Containing / EndingWith / IsNull");
+        printList("fullName contains 'nguyen'", studentService.searchByName("nguyen"));
+        printList("email domain 'gmail.com'", studentService.findByEmailDomain("gmail.com"));
+        printList("email is null", studentService.findWithoutEmail());
+    }
     private void todo10() {}
     private void todo11() {}
     private void todo12() {}

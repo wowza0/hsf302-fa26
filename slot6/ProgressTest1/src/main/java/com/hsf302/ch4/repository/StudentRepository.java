@@ -13,7 +13,12 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
                                            JpaSpecificationExecutor<Student> {
 
     // ===== TODO 8 =====
-    Optional<Student> findByStudentCode(String studentCode);   // WHERE student_code = ?
-    boolean existsByEmail(String email);                        // kiểm tra tồn tại
-    long countByActiveTrue();                                   // WHERE active = 1
+    Optional<Student> findByStudentCode(String studentCode);
+    boolean existsByEmail(String email);
+    long countByActiveTrue();
+
+    // ===== TODO 9 =====
+    List<Student> findByFullNameContainingIgnoreCase(String keyword);
+    List<Student> findByEmailEndingWith(String suffix);
+    List<Student> findByEmailIsNull();
 }
