@@ -40,4 +40,6 @@ public interface StudentService {
     List<Student> findTopNInDepartment(String deptCode, int n);   // TODO 17
 
     List<com.hsf302.ch4.dto.StudentSummary> getActiveSummaries();   // TODO 18
+
+    Page<Student> findActiveByDepartment(String deptCode, int pageIndex, int size);   // TODO 19
 }

@@ -162,7 +162,17 @@ public class ExerciseRunner implements CommandLineRunner {
                 p.getStudentCode(), p.getFullName(), p.getGpa(), p.getDepartmentName()));
         System.out.println("   -> " + list.size() + " record(s)");
     }
-    private void todo19() {}
+    // ===== TODO 19 =====
+    private void todo19() {
+        title("TODO 19: @Query + Pageable");
+        for (int i = 0; i < 2; i++) {
+            org.springframework.data.domain.Page<com.hsf302.ch4.pojo.Student> page =
+                    studentService.findActiveByDepartment("SE", i, 2);
+            printList("SE active - page " + page.getNumber(), page.getContent());
+            System.out.println("   totalElements=" + page.getTotalElements()
+                    + ", totalPages=" + page.getTotalPages());
+        }
+    }
     private void todo20() {}
     private void todo21() {}
     private void todo22() {}
