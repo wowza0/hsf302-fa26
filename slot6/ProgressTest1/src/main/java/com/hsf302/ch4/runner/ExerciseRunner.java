@@ -97,7 +97,13 @@ public class ExerciseRunner implements CommandLineRunner {
         printList("email domain 'gmail.com'", studentService.findByEmailDomain("gmail.com"));
         printList("email is null", studentService.findWithoutEmail());
     }
-    private void todo10() {}
+    // ===== TODO 10 =====
+    private void todo10() {
+        title("TODO 10: Between / And / True / After");
+        printList("GPA in [3.0, 3.6] desc", studentService.findByGpaRange(3.0, 3.6));
+        printList("MALE & active", studentService.findActiveByGender(com.hsf302.ch4.pojo.Gender.MALE));
+        printList("dob after 2005-01-01", studentService.findBornAfter(java.time.LocalDate.of(2005, 1, 1)));
+    }
     private void todo11() {}
     private void todo12() {}
     private void todo13() {}

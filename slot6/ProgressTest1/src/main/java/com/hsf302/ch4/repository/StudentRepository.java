@@ -21,4 +21,9 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     List<Student> findByFullNameContainingIgnoreCase(String keyword);
     List<Student> findByEmailEndingWith(String suffix);
     List<Student> findByEmailIsNull();
+
+    // ===== TODO 10 =====
+    List<Student> findByGpaBetweenOrderByGpaDesc(double min, double max);
+    List<Student> findByGenderAndActiveTrue(Gender gender);
+    List<Student> findByDobAfter(LocalDate date);
 }
