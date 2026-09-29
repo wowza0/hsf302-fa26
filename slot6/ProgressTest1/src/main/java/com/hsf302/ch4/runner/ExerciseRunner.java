@@ -104,7 +104,14 @@ public class ExerciseRunner implements CommandLineRunner {
         printList("MALE & active", studentService.findActiveByGender(com.hsf302.ch4.pojo.Gender.MALE));
         printList("dob after 2005-01-01", studentService.findBornAfter(java.time.LocalDate.of(2005, 1, 1)));
     }
-    private void todo11() {}
+    // ===== TODO 11 =====
+    private void todo11() {
+        title("TODO 11: Nested property / Top / IsEmpty");
+        printList("Students of SE (order by name)", studentService.findByDepartment("SE"));
+        System.out.println("count students of AI -> " + studentService.countByDepartment("AI"));
+        printList("Top 3 GPA", studentService.findTop3ByGpa());
+        printList("Departments without students", departmentService.findDepartmentsWithoutStudents());
+    }
     private void todo12() {}
     private void todo13() {}
     private void todo14() {}

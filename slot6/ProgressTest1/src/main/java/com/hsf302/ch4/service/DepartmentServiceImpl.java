@@ -1,10 +1,13 @@
 package com.hsf302.ch4.service;
 
+import com.hsf302.ch4.pojo.Department;
 import com.hsf302.ch4.repository.DepartmentRepository;
 import com.hsf302.ch4.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +26,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public boolean existsById(Long id) {
         return departmentRepository.existsById(id);
+    }
+
+    // ===== TODO 11 =====
+    @Override
+    public List<Department> findDepartmentsWithoutStudents() {
+        return departmentRepository.findByStudentsIsEmpty();
     }
 }
