@@ -1,6 +1,5 @@
 package com.hsf302.ch4.service;
 
-import com.hsf302.ch4.pojo.Department;
 import com.hsf302.ch4.pojo.Gender;
 import com.hsf302.ch4.pojo.Student;
 import org.springframework.data.domain.Page;
@@ -31,4 +30,6 @@ public interface StudentService {
     List<Student> findByDepartment(String deptCode);    // TODO 11a
     long countByDepartment(String deptCode);            // TODO 11b
     List<Student> findTop3ByGpa();                      // TODO 11c
+
+    List<Student> findGoodStudents(String deptCode, double minGpa);   // TODO 12
 }
