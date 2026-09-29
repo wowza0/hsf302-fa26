@@ -190,7 +190,14 @@ public class ExerciseRunner implements CommandLineRunner {
         int updated = studentService.deactivateLowGpaStudents(2.0);
         System.out.println("Deactivated " + updated + " student(s) with GPA < 2.0");
     }
-    private void todo22() {}
+    // ===== TODO 22 =====
+    private void todo22() {
+        title("TODO 22: Transactional - Move & Delete");
+        departmentService.deleteDepartmentAndMoveStudents("AI", "SE");
+        System.out.println("Moved students from AI to SE, and deleted AI.");
+        System.out.println("Total SE students now: " + studentService.countByDepartment("SE"));
+        System.out.println("AI exists: " + departmentService.findByCode("AI").isPresent());
+    }
     private void todo23() {}
     // ===== TODO 24 (Bonus) =====
     private void todo24() {

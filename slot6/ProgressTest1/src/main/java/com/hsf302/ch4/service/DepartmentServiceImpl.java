@@ -53,4 +53,26 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentRepository.findByCodeWithStudents(code)
                 .orElseThrow(() -> new IllegalArgumentException("Department not found: " + code));
     }
+
+    // ===== TODO 22 =====
+    @Override
+    @Transactional
+    public void deleteDepartmentAndMoveStudents(String fromCode, String toCode) {
+        // Lấy phòng ban cũ (cùng với ds sinh viên để chuẩn bị dời đi)
+        Department fromDept = getWithStudents(fromCode);
+        // Lấy phòng ban mới
+        Department toDept = departmentRepository.findByCode(toCode)
+                .orElseThrow(() -> new IllegalArgumentException("Target department not found: " + toCode));
+
+        // Chuyển từng sinh viên sang khoa mới
+        for (com.hsf302.ch4.pojo.Student s : fromDept.getStudents()) {
+            s.setDepartment(toDept);
+        }
+        // Lưu lại danh sách sinh viên đã chuyển khoa (cần thiết tùy vào cascade)
+        studentRepository.saveAll(fromDept.getStudents());
+
+        // Xoá khoa cũ (phải clear list students để không bị ràng buộc nếu có cascade)
+        fromDept.getStudents().clear();
+        departmentRepository.delete(fromDept);
+    }
 }
