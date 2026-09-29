@@ -124,4 +124,13 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> findGoodStudents(String deptCode, double minGpa) {
         return studentRepository.findGoodStudentsInDepartment(deptCode, minGpa);
     }
+
+    // ===== TODO 13 =====
+    @Override
+    public List<Student> searchByKeyword(String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            return List.of();
+        }
+        return studentRepository.searchByKeyword(keyword.trim());
+    }
 }

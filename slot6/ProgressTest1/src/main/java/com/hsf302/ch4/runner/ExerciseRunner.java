@@ -117,7 +117,12 @@ public class ExerciseRunner implements CommandLineRunner {
         title("TODO 12: JPQL + named parameter");
         printList("SE, GPA >= 3.0", studentService.findGoodStudents("SE", 3.0));
     }
-    private void todo13() {}
+    // ===== TODO 13 =====
+    private void todo13() {
+        title("TODO 13: JPQL LIKE");
+        printList("keyword 'hoa'", studentService.searchByKeyword("hoa"));
+        printList("keyword 'gmail'", studentService.searchByKeyword("gmail"));
+    }
     private void todo14() {}
     private void todo15() {}
     private void todo16() {}
