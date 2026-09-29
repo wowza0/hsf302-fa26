@@ -133,4 +133,10 @@ public class StudentServiceImpl implements StudentService {
         }
         return studentRepository.searchByKeyword(keyword.trim());
     }
+
+    // ===== TODO 15 =====
+    @Override
+    public List<Student> findAboveAverageGpa() {
+        return studentRepository.findAboveAverageGpa();
+    }
 }
