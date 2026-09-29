@@ -44,4 +44,6 @@ public interface StudentService {
     Page<Student> findActiveByDepartment(String deptCode, int pageIndex, int size);   // TODO 19
 
     List<Student> search(String kw, String deptCode, Double minGpa, Boolean active);   // TODO 24
+
+    void updateStudentGpa(Long id, double newGpa);   // TODO 20
 }

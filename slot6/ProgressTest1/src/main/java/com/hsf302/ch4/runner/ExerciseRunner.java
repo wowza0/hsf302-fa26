@@ -173,7 +173,17 @@ public class ExerciseRunner implements CommandLineRunner {
                     + ", totalPages=" + page.getTotalPages());
         }
     }
-    private void todo20() {}
+    // ===== TODO 20 =====
+    private void todo20() {
+        title("TODO 20: Update by Dirty Checking");
+        System.out.println("Before update:");
+        studentService.findById(1L).ifPresent(System.out::println);
+
+        studentService.updateStudentGpa(1L, 4.0);
+
+        System.out.println("After update:");
+        studentService.findById(1L).ifPresent(System.out::println);
+    }
     private void todo21() {}
     private void todo22() {}
     private void todo23() {}
