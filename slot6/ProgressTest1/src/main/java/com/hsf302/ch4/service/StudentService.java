@@ -48,4 +48,6 @@ public interface StudentService {
     void updateStudentGpa(Long id, double newGpa);   // TODO 20
 
     int deactivateLowGpaStudents(double minGpa);     // TODO 21
+
+    long deleteInactiveStudents();                   // TODO 23
 }

@@ -198,7 +198,13 @@ public class ExerciseRunner implements CommandLineRunner {
         System.out.println("Total SE students now: " + studentService.countByDepartment("SE"));
         System.out.println("AI exists: " + departmentService.findByCode("AI").isPresent());
     }
-    private void todo23() {}
+    // ===== TODO 23 =====
+    private void todo23() {
+        title("TODO 23: Derived delete");
+        long deleted = studentService.deleteInactiveStudents();
+        System.out.println("Deleted " + deleted + " inactive student(s).");
+        System.out.println("Total students now: " + studentService.count());
+    }
     // ===== TODO 24 (Bonus) =====
     private void todo24() {
         title("TODO 24 (Bonus): Specification");

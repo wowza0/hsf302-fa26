@@ -81,4 +81,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     @org.springframework.data.jpa.repository.Modifying
     @Query("UPDATE Student s SET s.active = false WHERE s.gpa < :minGpa")
     int deactivateLowGpaStudents(@Param("minGpa") double minGpa);
+
+    // ===== TODO 23 =====
+    @org.springframework.transaction.annotation.Transactional
+    long deleteByActiveFalse();
 }

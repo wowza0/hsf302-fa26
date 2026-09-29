@@ -189,4 +189,11 @@ public class StudentServiceImpl implements StudentService {
     public int deactivateLowGpaStudents(double minGpa) {
         return studentRepository.deactivateLowGpaStudents(minGpa);
     }
+
+    // ===== TODO 23 =====
+    @Override
+    @Transactional
+    public long deleteInactiveStudents() {
+        return studentRepository.deleteByActiveFalse();
+    }
 }
