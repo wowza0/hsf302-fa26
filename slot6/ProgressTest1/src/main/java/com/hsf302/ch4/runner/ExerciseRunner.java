@@ -184,7 +184,12 @@ public class ExerciseRunner implements CommandLineRunner {
         System.out.println("After update:");
         studentService.findById(1L).ifPresent(System.out::println);
     }
-    private void todo21() {}
+    // ===== TODO 21 =====
+    private void todo21() {
+        title("TODO 21: @Modifying UPDATE");
+        int updated = studentService.deactivateLowGpaStudents(2.0);
+        System.out.println("Deactivated " + updated + " student(s) with GPA < 2.0");
+    }
     private void todo22() {}
     private void todo23() {}
     // ===== TODO 24 (Bonus) =====

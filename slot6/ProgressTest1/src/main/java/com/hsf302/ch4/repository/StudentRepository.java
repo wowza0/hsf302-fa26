@@ -76,4 +76,9 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     // ===== TODO 19 =====
     @Query("SELECT s FROM Student s WHERE s.department.code = :code AND s.active = true")
     Page<Student> findActiveByDepartment(@Param("code") String code, Pageable pageable);
+
+    // ===== TODO 21 =====
+    @org.springframework.data.jpa.repository.Modifying
+    @Query("UPDATE Student s SET s.active = false WHERE s.gpa < :minGpa")
+    int deactivateLowGpaStudents(@Param("minGpa") double minGpa);
 }

@@ -182,4 +182,11 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new IllegalArgumentException("Student not found: " + id));
         student.setGpa(newGpa); // Hibernate tự update (Dirty Checking) khi transaction commit
     }
+
+    // ===== TODO 21 =====
+    @Override
+    @Transactional // UPDATE bắt buộc phải có Transaction
+    public int deactivateLowGpaStudents(double minGpa) {
+        return studentRepository.deactivateLowGpaStudents(minGpa);
+    }
 }

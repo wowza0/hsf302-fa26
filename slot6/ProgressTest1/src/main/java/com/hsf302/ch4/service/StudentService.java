@@ -46,4 +46,6 @@ public interface StudentService {
     List<Student> search(String kw, String deptCode, Double minGpa, Boolean active);   // TODO 24
 
     void updateStudentGpa(Long id, double newGpa);   // TODO 20
+
+    int deactivateLowGpaStudents(double minGpa);     // TODO 21
 }
