@@ -9,4 +9,8 @@ public interface CourseService {
     long count();                               // TODO 6
     List<Course> findAllOrderByCode();          // TODO 6
     Optional<Course> findById(Long id);         // TODO 6
+
+    Optional<Course> findByCode(String code);   // TODO 8
+    List<Course> findBySemester(String semester); // TODO 8
+    long countBySemester(String semester);      // TODO 8
 }

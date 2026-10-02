@@ -70,7 +70,16 @@ public class Exercise2Runner implements CommandLineRunner {
         printList("(a) Courses of SE001", enrollmentService.getCoursesOfStudent("SE001"));
         printList("(b) Students of AIL303", enrollmentService.getStudentsOfCourse("AIL303"));
     }
-    private void todo8() {}
+    // ===== TODO 8 =====
+    private void todo8() {
+        title("TODO 8: findByCode, findBySemester, countBySemester");
+        for (String code : java.util.List.of("HSF302", "XXX000")) {
+            System.out.println("(a) " + code + ": "
+                    + courseService.findByCode(code).map(com.hsf302.ch4.pojo.Course::getName).orElse("Not found"));
+        }
+        printList("(b) Semester SU26", courseService.findBySemester("SU26"));
+        System.out.println("(c) Courses in FA26: " + courseService.countBySemester("FA26"));
+    }
     private void todo9() {}
     private void todo10() {}
 }
