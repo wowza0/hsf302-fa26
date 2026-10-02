@@ -85,4 +85,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     // ===== TODO 23 =====
     @org.springframework.transaction.annotation.Transactional
     long deleteByActiveFalse();
+
+    //
 }
