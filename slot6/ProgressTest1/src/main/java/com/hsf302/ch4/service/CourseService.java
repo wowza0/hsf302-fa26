@@ -13,4 +13,7 @@ public interface CourseService {
     Optional<Course> findByCode(String code);   // TODO 8
     List<Course> findBySemester(String semester); // TODO 8
     long countBySemester(String semester);      // TODO 8
+
+    List<Course> findCoursesOfStudent(String studentCode);               // TODO 10
+    List<Course> findCoursesOfDepartment(String deptCode, boolean distinct); // TODO 10
 }
