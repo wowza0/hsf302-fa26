@@ -32,7 +32,7 @@ public class Exercise2Runner implements CommandLineRunner {
 
     private void partB() { todo6(); todo7(); }
     private void partC() { todo8(); todo9(); todo10(); todo11(); }
-    private void partD() { todo12(); todo13(); todo14(); todo15(); }
+    private void partD() { todo12(); todo13(); todo14(); todo15(); todo16(); }
 
     // ===== helpers =====
     private void title(String t) {
@@ -138,5 +138,33 @@ public class Exercise2Runner implements CommandLineRunner {
         title("TODO 15: SIZE() on collections");
         printList("(a) Full courses", courseService.findFullCourses());
         printList("(b) Students with more than 2 courses", enrollmentService.findStudentsWithMoreThan(2));
+    }
+
+    // ===== TODO 16 =====
+    private void todo16() {
+        title("TODO 16: LazyInitializationException, JOIN FETCH, @EntityGraph");
+
+        // (a) Student trả về từ Service (Exercise 1) → transaction đã đóng → courses chưa được nạp
+        try {
+            com.hsf302.ch4.pojo.Student s = studentService.findByStudentCode("SE001").orElseThrow();
+            System.out.println("(a) courses = " + s.getCourses().size());
+        } catch (org.hibernate.LazyInitializationException e) {
+            System.out.println("(a) Caught: " + e.getClass().getSimpleName());
+            System.out.println("    " + e.getMessage());
+        }
+
+        // (b) JOIN FETCH: nạp student + courses trong 1 câu SQL
+        com.hsf302.ch4.pojo.Student s = enrollmentService.getStudentWithCourses("SE001");
+        System.out.println("(b) " + s.getStudentCode() + " - " + s.getFullName());
+        s.getCourses().stream()
+                .sorted(java.util.Comparator.comparing(com.hsf302.ch4.pojo.Course::getCode))
+                .forEach(c -> System.out.println("   " + c));
+
+        // (c) @EntityGraph: nạp course + students
+        com.hsf302.ch4.pojo.Course c = courseService.getWithStudents("SWP391");
+        System.out.println("(c) " + c.getCode() + " - " + c.getName());
+        c.getStudents().stream()
+                .sorted(java.util.Comparator.comparing(com.hsf302.ch4.pojo.Student::getFullName))
+                .forEach(st -> System.out.println("   " + st));
     }
 }

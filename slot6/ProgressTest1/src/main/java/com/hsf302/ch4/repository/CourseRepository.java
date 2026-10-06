@@ -29,4 +29,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     // ===== Exercise 2 TODO 15 =====
     @org.springframework.data.jpa.repository.Query("SELECT c FROM Course c WHERE SIZE(c.students) >= c.capacity ORDER BY c.code")
     List<Course> findFullCourses();
+
+    // ===== Exercise 2 TODO 16 =====
+    @org.springframework.data.jpa.repository.EntityGraph(attributePaths = "students")
+    Optional<Course> findWithStudentsByCode(String code);
 }

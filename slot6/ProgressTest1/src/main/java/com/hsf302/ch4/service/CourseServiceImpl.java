@@ -82,4 +82,11 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> findFullCourses() {
         return courseRepository.findFullCourses();
     }
+
+    // ===== TODO 16 =====
+    @Override
+    public Course getWithStudents(String code) {
+        return courseRepository.findWithStudentsByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException("Course not found: " + code));
+    }
 }

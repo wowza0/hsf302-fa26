@@ -91,6 +91,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return studentRepository.findStudentsWithMoreThanNCourses(n);
     }
 
+    // ===== TODO 16 =====
+    @Override
+    public Student getStudentWithCourses(String studentCode) {
+        return studentRepository.findByStudentCodeWithCourses(studentCode)
+                .orElseThrow(() -> new IllegalArgumentException("Student not found: " + studentCode));
+    }
+
     // ===== helper dùng chung cho mọi method =====
     private Student getStudent(String studentCode) {
         if (studentCode == null || studentCode.isBlank()) {
