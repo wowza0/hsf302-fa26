@@ -98,6 +98,22 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .orElseThrow(() -> new IllegalArgumentException("Student not found: " + studentCode));
     }
 
+    // ===== TODO 18 =====
+    @Override
+    public List<com.hsf302.ch4.dto.EnrollmentView> getEnrollmentsOfDepartment(String deptCode) {
+        return studentRepository.findEnrollmentsOfDepartment(deptCode);
+    }
+
+    // ===== TODO 19 =====
+    @Override
+    public org.springframework.data.domain.Page<Student> findStudentsInCoursePage(String courseCode, int pageIndex, int size) {
+        if (pageIndex < 0 || size <= 0) {
+            throw new IllegalArgumentException("pageIndex must be >= 0 and size must be > 0");
+        }
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(pageIndex, size, org.springframework.data.domain.Sort.by("fullName"));
+        return studentRepository.findPageByCourseCode(courseCode, pageable);
+    }
+
     // ===== helper dùng chung cho mọi method =====
     private Student getStudent(String studentCode) {
         if (studentCode == null || studentCode.isBlank()) {

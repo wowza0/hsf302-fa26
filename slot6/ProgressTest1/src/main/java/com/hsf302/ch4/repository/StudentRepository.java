@@ -116,4 +116,17 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     // ===== Exercise 2 TODO 16 =====
     @org.springframework.data.jpa.repository.Query("SELECT s FROM Student s LEFT JOIN FETCH s.courses WHERE s.studentCode = :code")
     Optional<Student> findByStudentCodeWithCourses(@org.springframework.data.repository.query.Param("code") String studentCode);
+
+    // ===== Exercise 2 TODO 18 =====
+    @org.springframework.data.jpa.repository.Query("SELECT s.studentCode AS studentCode, s.fullName AS fullName, " +
+           "       c.code AS courseCode, c.name AS courseName, c.credits AS credits " +
+           "FROM Student s JOIN s.department d JOIN s.courses c " +
+           "WHERE d.code = :deptCode " +
+           "ORDER BY s.studentCode, c.code")
+    List<com.hsf302.ch4.dto.EnrollmentView> findEnrollmentsOfDepartment(@org.springframework.data.repository.query.Param("deptCode") String deptCode);
+
+    // ===== Exercise 2 TODO 19 =====
+    @org.springframework.data.jpa.repository.Query(value = "SELECT s FROM Student s JOIN s.courses c WHERE c.code = :code",
+           countQuery = "SELECT COUNT(s) FROM Student s JOIN s.courses c WHERE c.code = :code")
+    org.springframework.data.domain.Page<Student> findPageByCourseCode(@org.springframework.data.repository.query.Param("code") String courseCode, org.springframework.data.domain.Pageable pageable);
 }

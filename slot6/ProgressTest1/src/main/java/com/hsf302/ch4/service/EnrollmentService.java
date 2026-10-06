@@ -21,4 +21,6 @@ public interface EnrollmentService {
     List<com.hsf302.ch4.dto.StudentCreditDTO> getCreditSummary(int minCredits);          // TODO 14
     List<Student> findStudentsWithMoreThan(int n);                                         // TODO 15
     Student getStudentWithCourses(String studentCode);                                     // TODO 16
+    List<com.hsf302.ch4.dto.EnrollmentView> getEnrollmentsOfDepartment(String deptCode);                      // TODO 18
+    org.springframework.data.domain.Page<Student> findStudentsInCoursePage(String courseCode, int pageIndex, int size);    // TODO 19
 }
