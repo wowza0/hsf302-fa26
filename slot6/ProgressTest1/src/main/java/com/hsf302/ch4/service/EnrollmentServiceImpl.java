@@ -179,6 +179,13 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         checkAndEnroll(s, to);     // (2) đăng ký lớp mới — lỗi ⇒ RuntimeException ⇒ rollback cả (1)
     }
 
+    // ===== TODO 24 =====
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public int removeEnrollmentsOfInactiveStudents() {
+        return studentRepository.deleteEnrollmentsOfInactiveStudents();
+    }
+
     // ===== helper dùng chung cho mọi method =====
     private Student getStudent(String studentCode) {
         if (studentCode == null || studentCode.isBlank()) {

@@ -35,7 +35,7 @@ public class Exercise2Runner implements CommandLineRunner {
     private void partC() { todo8(); todo9(); todo10(); todo11(); }
     private void partD() { todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); }
     private void bonus() { todo25(); }
-    private void partE() { todo20(); todo21(); todo22(); todo23(); }
+    private void partE() { todo20(); todo21(); todo22(); todo23(); todo24(); }
 
     // ===== helpers =====
     private void title(String t) {
@@ -258,5 +258,13 @@ public class Exercise2Runner implements CommandLineRunner {
         System.out.println("(b) Unlinked students: " + courseService.deleteCourse("IAA202"));
         printList("Remaining courses", courseService.findAllOrderByCode());
         printList("Courses of IA002", enrollmentService.getCoursesOfStudent("IA002"));
+    }
+
+    // ===== TODO 24 =====
+    private void todo24() {
+        title("TODO 24: bulk delete enrollments of inactive students");
+        System.out.println("Deleted rows: " + enrollmentService.removeEnrollmentsOfInactiveStudents());
+        printCourseStats();
+        printList("Students without courses", enrollmentService.findStudentsWithoutCourses());
     }
 }

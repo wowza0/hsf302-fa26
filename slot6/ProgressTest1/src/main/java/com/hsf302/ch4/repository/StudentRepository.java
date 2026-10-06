@@ -129,4 +129,11 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     @org.springframework.data.jpa.repository.Query(value = "SELECT s FROM Student s JOIN s.courses c WHERE c.code = :code",
            countQuery = "SELECT COUNT(s) FROM Student s JOIN s.courses c WHERE c.code = :code")
     org.springframework.data.domain.Page<Student> findPageByCourseCode(@org.springframework.data.repository.query.Param("code") String courseCode, org.springframework.data.domain.Pageable pageable);
+
+    // ===== Exercise 2 TODO 24 =====
+    @org.springframework.data.jpa.repository.Modifying(clearAutomatically = true, flushAutomatically = true)
+    @org.springframework.data.jpa.repository.Query(value = "DELETE FROM student_courses " +
+                   "WHERE student_id IN (SELECT id FROM students WHERE active = 0)",
+           nativeQuery = true)
+    int deleteEnrollmentsOfInactiveStudents();
 }
