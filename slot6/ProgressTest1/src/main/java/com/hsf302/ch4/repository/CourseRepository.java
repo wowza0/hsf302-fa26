@@ -25,4 +25,8 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
            "FROM Course c LEFT JOIN c.students s " +
            "GROUP BY c.code, c.name, c.capacity ORDER BY c.code")
     List<com.hsf302.ch4.dto.CourseStatDTO> getCourseStats();
+
+    // ===== Exercise 2 TODO 15 =====
+    @org.springframework.data.jpa.repository.Query("SELECT c FROM Course c WHERE SIZE(c.students) >= c.capacity ORDER BY c.code")
+    List<Course> findFullCourses();
 }

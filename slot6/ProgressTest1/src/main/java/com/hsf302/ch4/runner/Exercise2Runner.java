@@ -32,7 +32,7 @@ public class Exercise2Runner implements CommandLineRunner {
 
     private void partB() { todo6(); todo7(); }
     private void partC() { todo8(); todo9(); todo10(); todo11(); }
-    private void partD() { todo12(); todo13(); todo14(); }
+    private void partD() { todo12(); todo13(); todo14(); todo15(); }
 
     // ===== helpers =====
     private void title(String t) {
@@ -131,5 +131,12 @@ public class Exercise2Runner implements CommandLineRunner {
         enrollmentService.getCreditSummary(7).forEach(d -> System.out.printf(
                 "   %s | %-15s | %d course(s) | %d credits%n",
                 d.studentCode(), d.fullName(), d.courseCount(), d.totalCredits()));
+    }
+
+    // ===== TODO 15 =====
+    private void todo15() {
+        title("TODO 15: SIZE() on collections");
+        printList("(a) Full courses", courseService.findFullCourses());
+        printList("(b) Students with more than 2 courses", enrollmentService.findStudentsWithMoreThan(2));
     }
 }
