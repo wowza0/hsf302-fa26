@@ -100,4 +100,12 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
            "WHERE c.code = :code AND s.gpa >= :minGpa ORDER BY s.gpa DESC")
     List<Student> findGoodStudentsInCourse(@org.springframework.data.repository.query.Param("code") String courseCode,
                                            @org.springframework.data.repository.query.Param("minGpa") double minGpa);
+
+    // ===== Exercise 2 TODO 14 =====
+    @org.springframework.data.jpa.repository.Query("SELECT new com.hsf302.ch4.dto.StudentCreditDTO(s.studentCode, s.fullName, COUNT(c), SUM(c.credits)) " +
+           "FROM Student s JOIN s.courses c " +
+           "GROUP BY s.studentCode, s.fullName " +
+           "HAVING SUM(c.credits) >= :minCredits " +
+           "ORDER BY SUM(c.credits) DESC, s.fullName")
+    List<com.hsf302.ch4.dto.StudentCreditDTO> getCreditSummary(@org.springframework.data.repository.query.Param("minCredits") long minCredits);
 }
