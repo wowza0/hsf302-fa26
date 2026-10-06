@@ -28,13 +28,14 @@ public class Exercise2Runner implements CommandLineRunner {
         partC();
         partD();
         bonus();
-        // partE() sẽ thêm dần
+        partE();
     }
 
     private void partB() { todo6(); todo7(); }
     private void partC() { todo8(); todo9(); todo10(); todo11(); }
     private void partD() { todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); }
     private void bonus() { todo25(); }
+    private void partE() { todo20(); todo21(); todo22(); }
 
     // ===== helpers =====
     private void title(String t) {
@@ -205,5 +206,41 @@ public class Exercise2Runner implements CommandLineRunner {
         printList("search(null, SU26, null, null)", enrollmentService.search(null, "SU26", null, null));
         printList("search(HSF302, null, SE, 3.5)", enrollmentService.search("HSF302", null, "SE", 3.5));
         printList("search(null, FA26, AI, null)", enrollmentService.search(null, "FA26", "AI", null));
+    }
+
+    // ===== TODO 20 =====
+    private void todo20() {
+        title("TODO 20: enroll with business rules");
+        attempt("enroll IA003 -> MKT101", () -> enrollmentService.enroll("IA003", "MKT101"));
+        attempt("enroll SE001 -> PRJ301", () -> enrollmentService.enroll("SE001", "PRJ301"));
+        attempt("enroll SE004 -> AIL303", () -> enrollmentService.enroll("SE004", "AIL303"));
+        attempt("enroll SE003 -> HSF302", () -> enrollmentService.enroll("SE003", "HSF302"));
+        attempt("enroll XX999 -> HSF302", () -> enrollmentService.enroll("XX999", "HSF302"));
+        printList("Courses of IA003", enrollmentService.getCoursesOfStudent("IA003"));
+        System.out.println("Students of MKT101: " + enrollmentService.countStudentsInCourse("MKT101"));
+    }
+
+    // ===== TODO 21 =====
+    private void todo21() {
+        title("TODO 21: unenroll");
+        attempt("unenroll AI002 <- AIL303", () -> enrollmentService.unenroll("AI002", "AIL303"));
+        attempt("unenroll IA003 <- PRJ301", () -> enrollmentService.unenroll("IA003", "PRJ301"));
+        attempt("enroll   SE004 -> AIL303", () -> enrollmentService.enroll("SE004", "AIL303"));
+        printList("Students of AIL303", enrollmentService.getStudentsOfCourse("AIL303"));
+        printList("Courses of AI002", enrollmentService.getCoursesOfStudent("AI002"));
+        System.out.println("AI002 still exists? " + studentService.findByStudentCode("AI002").isPresent());
+        System.out.println("Total courses: " + courseService.count());
+    }
+
+    // ===== TODO 22 =====
+    private void todo22() {
+        title("TODO 22: switch course in one transaction");
+        attempt("switch SE001 SWP391 -> MKT101",
+                () -> enrollmentService.switchCourse("SE001", "SWP391", "MKT101"));
+        printList("Courses of SE001", enrollmentService.getCoursesOfStudent("SE001"));
+
+        attempt("switch SE001 PRJ301 -> AIL303",
+                () -> enrollmentService.switchCourse("SE001", "PRJ301", "AIL303"));
+        printList("Courses of SE001 (after rollback)", enrollmentService.getCoursesOfStudent("SE001"));
     }
 }

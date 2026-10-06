@@ -124,6 +124,61 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return studentRepository.findAll(spec, org.springframework.data.domain.Sort.by("fullName"));
     }
 
+    // ===== TODO 20 =====
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void enroll(String studentCode, String courseCode) {
+        Student s = getStudent(studentCode);
+        Course c = getCourse(courseCode);
+        checkAndEnroll(s, c);
+    }
+
+    /** Kiểm tra quy tắc nghiệp vụ rồi mới đăng ký. Dùng lại ở TODO 22. */
+    private void checkAndEnroll(Student s, Course c) {
+        if (!s.isActive()) {
+            throw new IllegalStateException("Student " + s.getStudentCode() + " is inactive");
+        }
+        if (s.getCourses().contains(c)) {
+            throw new IllegalStateException("Student " + s.getStudentCode()
+                    + " already enrolled in " + c.getCode());
+        }
+        int enrolled = c.getStudents().size();
+        if (enrolled >= c.getCapacity()) {
+            throw new IllegalStateException("Course " + c.getCode()
+                    + " is full (" + enrolled + "/" + c.getCapacity() + ")");
+        }
+        s.enroll(c);          // helper 2 chiều → dirty checking INSERT student_courses khi commit
+    }
+
+    // ===== TODO 21 =====
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void unenroll(String studentCode, String courseCode) {
+        Student s = getStudent(studentCode);
+        Course c = getCourse(courseCode);
+        if (!s.getCourses().contains(c)) {
+            throw new IllegalStateException("Student " + studentCode + " is not enrolled in " + courseCode);
+        }
+        s.unenroll(c);        // chỉ DELETE 1 dòng trong student_courses
+    }
+
+    // ===== TODO 22 =====
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void switchCourse(String studentCode, String fromCode, String toCode) {
+        if (fromCode == null || fromCode.equals(toCode)) {
+            throw new IllegalArgumentException("fromCode and toCode must be different");
+        }
+        Student s = getStudent(studentCode);
+        Course from = getCourse(fromCode);
+        Course to = getCourse(toCode);
+        if (!s.getCourses().contains(from)) {
+            throw new IllegalStateException("Student " + studentCode + " is not enrolled in " + fromCode);
+        }
+        s.unenroll(from);          // (1) gỡ lớp cũ
+        checkAndEnroll(s, to);     // (2) đăng ký lớp mới — lỗi ⇒ RuntimeException ⇒ rollback cả (1)
+    }
+
     // ===== helper dùng chung cho mọi method =====
     private Student getStudent(String studentCode) {
         if (studentCode == null || studentCode.isBlank()) {
