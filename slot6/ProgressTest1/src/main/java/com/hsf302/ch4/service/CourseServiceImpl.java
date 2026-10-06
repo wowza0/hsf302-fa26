@@ -98,4 +98,29 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseRepository.findTopEnrolledNative(n);
     }
+
+    // ===== TODO 23 =====
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void deleteCourseDirectly(String code) {
+        Course c = getCourse(code);
+        courseRepository.delete(c);
+        courseRepository.flush();          // ép Hibernate chạy DELETE ngay để thấy lỗi
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public int deleteCourse(String code) {
+        Course c = getCourse(code);
+        // copy ra Set mới: unenroll() sẽ sửa c.getStudents() → tránh ConcurrentModificationException
+        java.util.Set<com.hsf302.ch4.pojo.Student> students = new java.util.HashSet<>(c.getStudents());
+        students.forEach(s -> s.unenroll(c));   // gỡ từ OWNING side → DELETE các dòng student_courses
+        courseRepository.delete(c);             // sau đó mới DELETE courses
+        return students.size();
+    }
+
+    private Course getCourse(String code) {
+        return courseRepository.findByCode(code)
+                .orElseThrow(() -> new IllegalArgumentException("Course not found: " + code));
+    }
 }

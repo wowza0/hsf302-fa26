@@ -35,7 +35,7 @@ public class Exercise2Runner implements CommandLineRunner {
     private void partC() { todo8(); todo9(); todo10(); todo11(); }
     private void partD() { todo12(); todo13(); todo14(); todo15(); todo16(); todo17(); todo18(); todo19(); }
     private void bonus() { todo25(); }
-    private void partE() { todo20(); todo21(); todo22(); }
+    private void partE() { todo20(); todo21(); todo22(); todo23(); }
 
     // ===== helpers =====
     private void title(String t) {
@@ -242,5 +242,21 @@ public class Exercise2Runner implements CommandLineRunner {
         attempt("switch SE001 PRJ301 -> AIL303",
                 () -> enrollmentService.switchCourse("SE001", "PRJ301", "AIL303"));
         printList("Courses of SE001 (after rollback)", enrollmentService.getCoursesOfStudent("SE001"));
+    }
+
+    // ===== TODO 23 =====
+    private void todo23() {
+        title("TODO 23: delete course");
+        try {
+            courseService.deleteCourseDirectly("IAA202");
+            System.out.println("(a) Deleted ?!");
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            System.out.println("(a) Caught: " + e.getClass().getSimpleName());
+            System.out.println("    " + e.getMostSpecificCause().getMessage());
+        }
+
+        System.out.println("(b) Unlinked students: " + courseService.deleteCourse("IAA202"));
+        printList("Remaining courses", courseService.findAllOrderByCode());
+        printList("Courses of IA002", enrollmentService.getCoursesOfStudent("IA002"));
     }
 }

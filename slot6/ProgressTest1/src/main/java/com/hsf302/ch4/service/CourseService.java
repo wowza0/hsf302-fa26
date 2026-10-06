@@ -23,4 +23,8 @@ public interface CourseService {
     List<Course> findFullCourses();                                      // TODO 15
     Course getWithStudents(String code);                                 // TODO 16
     List<com.hsf302.ch4.dto.CourseEnrollmentCount> findTopEnrolled(int n);                  // TODO 17
+
+    // ===== Part E =====
+    void deleteCourseDirectly(String code);                              // TODO 23 (sai)
+    int deleteCourse(String code);                                       // TODO 23 (đúng)
 }
