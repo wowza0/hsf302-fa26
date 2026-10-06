@@ -22,4 +22,5 @@ public interface CourseService {
     List<com.hsf302.ch4.dto.CourseStatDTO> getStatistics();              // TODO 13
     List<Course> findFullCourses();                                      // TODO 15
     Course getWithStudents(String code);                                 // TODO 16
+    List<com.hsf302.ch4.dto.CourseEnrollmentCount> findTopEnrolled(int n);                  // TODO 17
 }

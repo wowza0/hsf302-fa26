@@ -33,4 +33,12 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     // ===== Exercise 2 TODO 16 =====
     @org.springframework.data.jpa.repository.EntityGraph(attributePaths = "students")
     Optional<Course> findWithStudentsByCode(String code);
+
+    // ===== Exercise 2 TODO 17 =====
+    @org.springframework.data.jpa.repository.Query(value = "SELECT TOP (:n) c.code AS code, c.name AS name, COUNT(sc.student_id) AS enrolled " +
+                   "FROM courses c LEFT JOIN student_courses sc ON sc.course_id = c.id " +
+                   "GROUP BY c.code, c.name " +
+                   "ORDER BY enrolled DESC, c.code",
+           nativeQuery = true)
+    List<com.hsf302.ch4.dto.CourseEnrollmentCount> findTopEnrolledNative(@org.springframework.data.repository.query.Param("n") int n);
 }
