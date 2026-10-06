@@ -19,4 +19,10 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     // ===== Exercise 2 TODO 11 =====
     List<Course> findByStudentsIsEmpty();
+
+    // ===== Exercise 2 TODO 13 =====
+    @org.springframework.data.jpa.repository.Query("SELECT new com.hsf302.ch4.dto.CourseStatDTO(c.code, c.name, c.capacity, COUNT(s), AVG(s.gpa)) " +
+           "FROM Course c LEFT JOIN c.students s " +
+           "GROUP BY c.code, c.name, c.capacity ORDER BY c.code")
+    List<com.hsf302.ch4.dto.CourseStatDTO> getCourseStats();
 }

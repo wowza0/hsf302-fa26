@@ -69,4 +69,11 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> findCoursesWithoutStudents() {
         return courseRepository.findByStudentsIsEmpty();
     }
+
+    // ===== Part D =====
+    // ===== TODO 13 =====
+    @Override
+    public List<com.hsf302.ch4.dto.CourseStatDTO> getStatistics() {
+        return courseRepository.getCourseStats();
+    }
 }

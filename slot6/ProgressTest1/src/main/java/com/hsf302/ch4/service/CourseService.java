@@ -17,4 +17,7 @@ public interface CourseService {
     List<Course> findCoursesOfStudent(String studentCode);               // TODO 10
     List<Course> findCoursesOfDepartment(String deptCode, boolean distinct); // TODO 10
     List<Course> findCoursesWithoutStudents();                           // TODO 11
+
+    // ===== Part D =====
+    List<com.hsf302.ch4.dto.CourseStatDTO> getStatistics();              // TODO 13
 }
