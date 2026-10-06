@@ -114,6 +114,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return studentRepository.findPageByCourseCode(courseCode, pageable);
     }
 
+    // ===== Bonus TODO 25 =====
+    @Override
+    public List<Student> search(String courseCode, String semester, String deptCode, Double minGpa) {
+        org.springframework.data.jpa.domain.Specification<Student> spec = org.springframework.data.jpa.domain.Specification.where(com.hsf302.ch4.specification.EnrollmentSpecs.enrolledIn(courseCode))
+                .and(com.hsf302.ch4.specification.EnrollmentSpecs.inSemester(semester))
+                .and(com.hsf302.ch4.specification.EnrollmentSpecs.inDepartment(deptCode))
+                .and(com.hsf302.ch4.specification.EnrollmentSpecs.gpaAtLeast(minGpa));
+        return studentRepository.findAll(spec, org.springframework.data.domain.Sort.by("fullName"));
+    }
+
     // ===== helper dùng chung cho mọi method =====
     private Student getStudent(String studentCode) {
         if (studentCode == null || studentCode.isBlank()) {

@@ -23,4 +23,7 @@ public interface EnrollmentService {
     Student getStudentWithCourses(String studentCode);                                     // TODO 16
     List<com.hsf302.ch4.dto.EnrollmentView> getEnrollmentsOfDepartment(String deptCode);                      // TODO 18
     org.springframework.data.domain.Page<Student> findStudentsInCoursePage(String courseCode, int pageIndex, int size);    // TODO 19
+
+    // ===== Bonus =====
+    List<Student> search(String courseCode, String semester, String deptCode, Double minGpa); // TODO 25
 }
