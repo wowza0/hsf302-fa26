@@ -12,4 +12,7 @@ public interface EnrollmentService {
     List<Student> findStudentsInCourse(String courseCode);  // TODO 9
     long countStudentsInCourse(String courseCode);          // TODO 9
     List<Student> findActiveStudentsInCourse(String courseCode); // TODO 9
+
+    List<Student> findStudentsWithoutCourses();             // TODO 11
+    boolean isEnrolled(String studentCode, String courseCode); // TODO 11
 }
