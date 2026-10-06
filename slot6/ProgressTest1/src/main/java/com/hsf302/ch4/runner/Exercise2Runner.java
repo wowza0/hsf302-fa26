@@ -26,11 +26,13 @@ public class Exercise2Runner implements CommandLineRunner {
     public void run(String... args) {
         partB();
         partC();
-        // partD(); partE() sẽ thêm dần
+        partD();
+        // partE() sẽ thêm dần
     }
 
     private void partB() { todo6(); todo7(); }
     private void partC() { todo8(); todo9(); todo10(); todo11(); }
+    private void partD() { todo12(); }
 
     // ===== helpers =====
     private void title(String t) {
@@ -102,5 +104,11 @@ public class Exercise2Runner implements CommandLineRunner {
         printList("(b) Courses without students", courseService.findCoursesWithoutStudents());
         System.out.println("(c) SE001 enrolled AIL303? " + enrollmentService.isEnrolled("SE001", "AIL303"));
         System.out.println("    SE002 enrolled AIL303? " + enrollmentService.isEnrolled("SE002", "AIL303"));
+    }
+
+    // ===== TODO 12 =====
+    private void todo12() {
+        title("TODO 12: JPQL JOIN s.courses");
+        printList("HSF302 & GPA >= 3.5", enrollmentService.findGoodStudentsInCourse("HSF302", 3.5));
     }
 }

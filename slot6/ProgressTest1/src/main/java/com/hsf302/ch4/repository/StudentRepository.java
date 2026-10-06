@@ -94,4 +94,10 @@ public interface StudentRepository extends JpaRepository<Student, Long>,
     // ===== Exercise 2 TODO 11 =====
     List<Student> findByCoursesIsEmptyOrderByFullNameAsc();
     boolean existsByStudentCodeAndCourses_Code(String studentCode, String courseCode);
+
+    // ===== Exercise 2 TODO 12 =====
+    @org.springframework.data.jpa.repository.Query("SELECT s FROM Student s JOIN s.courses c " +
+           "WHERE c.code = :code AND s.gpa >= :minGpa ORDER BY s.gpa DESC")
+    List<Student> findGoodStudentsInCourse(@org.springframework.data.repository.query.Param("code") String courseCode,
+                                           @org.springframework.data.repository.query.Param("minGpa") double minGpa);
 }
