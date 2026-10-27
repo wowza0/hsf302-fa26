@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <!-- TODO 15.1: Dynamic title: id null → 'Them sinh vien', otherwise 'Cap nhat sinh vien' -->
+    <title th:text="${student.id == null} ? 'Them sinh vien' : 'Cap nhat sinh vien'">Form sinh vien</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <!-- TODO 15.2: Dynamic heading -->
+                    <h4 class="mb-0"
+                        th:text="${student.id == null} ? 'Them sinh vien moi' : 'Cap nhat sinh vien'">
+                        Them sinh vien moi
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <!-- TODO 15.3: form action, object, method + novalidate -->
+                    <form th:action="@{/students/save}"
+                          th:object="${student}"
+                          method="post"
+                          novalidate>
+
+                        <!-- TODO 15.4: Hidden id field -->
+                        <input type="hidden" th:field="*{id}">
+
+                        <!-- TODO 16.1: Global error summary -->
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                            <strong>Vui long kiem tra lai cac thong tin sau:</strong>
+                            <ul class="mb-0 mt-2">
+                                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                            </ul>
+                        </div>
+
+                        <div class="row g-3">
+                            <!-- TODO 15.5 + 16.2: Ma sinh vien -->
+                            <div class="col-md-6">
+                                <label for="studentCode" class="form-label">
+                                    Ma sinh vien <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       id="studentCode"
+                                       class="form-control"
+                                       placeholder="VD: SE180001"
+                                       th:field="*{studentCode}"
+                                       th:errorclass="is-invalid">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('studentCode')}"
+                                     th:errors="*{studentCode}"></div>
+                            </div>
+
+                            <!-- Ho ten -->
+                            <div class="col-md-6">
+                                <label for="fullName" class="form-label">
+                                    Ho ten <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                       id="fullName"
+                                       class="form-control"
+                                       th:field="*{fullName}"
+                                       th:errorclass="is-invalid">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('fullName')}"
+                                     th:errors="*{fullName}"></div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">
+                                    Email <span class="text-danger">*</span>
+                                </label>
+                                <input type="email"
+                                       id="email"
+                                       class="form-control"
+                                       th:field="*{email}"
+                                       th:errorclass="is-invalid">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('email')}"
+                                     th:errors="*{email}"></div>
+                            </div>
+
+                            <!-- Ngay sinh -->
+                            <div class="col-md-6">
+                                <label for="dateOfBirth" class="form-label">
+                                    Ngay sinh <span class="text-danger">*</span>
+                                </label>
+                                <input type="date"
+                                       id="dateOfBirth"
+                                       class="form-control"
+                                       th:field="*{dateOfBirth}"
+                                       th:errorclass="is-invalid">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('dateOfBirth')}"
+                                     th:errors="*{dateOfBirth}"></div>
+                            </div>
+
+                            <!-- GPA -->
+                            <div class="col-md-6">
+                                <label for="gpa" class="form-label">
+                                    GPA (0 - 10) <span class="text-danger">*</span>
+                                </label>
+                                <!-- type="text" to allow testing type mismatch error -->
+                                <input type="text"
+                                       id="gpa"
+                                       class="form-control"
+                                       th:field="*{gpa}"
+                                       th:errorclass="is-invalid">
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('gpa')}"
+                                     th:errors="*{gpa}"></div>
+                            </div>
+
+                            <!-- Nganh – TODO 15.6: options from Map ${majors} -->
+                            <div class="col-md-6">
+                                <label for="major" class="form-label">
+                                    Nganh <span class="text-danger">*</span>
+                                </label>
+                                <select id="major"
+                                        class="form-select"
+                                        th:field="*{major}"
+                                        th:errorclass="is-invalid">
+                                    <option value="">-- Chon nganh --</option>
+                                    <option th:each="entry : ${majors}"
+                                            th:value="${entry.key}"
+                                            th:text="|${entry.key} - ${entry.value}|">SE - Ky thuat phan mem</option>
+                                </select>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('major')}"
+                                     th:errors="*{major}"></div>
+                            </div>
+
+                            <!-- TODO 15.7: active checkbox; label uses #ids.prev -->
+                            <div class="col-12">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           th:field="*{active}">
+                                    <label class="form-check-label"
+                                           th:for="${#ids.prev('active')}">Dang hoc</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <!-- TODO 15.8: Dynamic submit button text -->
+                            <button type="submit" class="btn btn-primary"
+                                    th:text="${student.id == null} ? 'Them moi' : 'Luu thay doi'">Luu</button>
+                            <a th:href="@{/students}" class="btn btn-secondary">Huy</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
