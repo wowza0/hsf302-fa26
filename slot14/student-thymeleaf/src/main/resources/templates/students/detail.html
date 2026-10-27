@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Chi tiet sinh vien</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <!-- TODO 14.1: Title "<studentCode> - <fullName>" via literal substitution -->
+            <h4 class="mb-0"
+                th:text="|${student.studentCode} - ${student.fullName}|">SE180001 - Nguyen Van An</h4>
+            <!-- TODO 14.2: Status badge with th:classappend + ternary -->
+            <span class="badge"
+                  th:classappend="${student.active} ? 'text-bg-success' : 'text-bg-secondary'"
+                  th:text="${student.active} ? 'Dang hoc' : 'Bao luu'">Dang hoc</span>
+        </div>
+
+        <div class="card-body">
+            <!-- TODO 14.3: Student details using ${student.xxx} -->
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Ma sinh vien</dt>
+                <dd class="col-sm-9" th:text="${student.studentCode}">SE180001</dd>
+
+                <!-- TODO 14.4 (bonus): Ho ten and Email using th:object + *{...} -->
+                <div th:object="${student}">
+                    <dt class="col-sm-3">Ho ten</dt>
+                    <dd class="col-sm-9" th:text="*{fullName}">Nguyen Van An</dd>
+
+                    <dt class="col-sm-3">Email</dt>
+                    <dd class="col-sm-9">
+                        <!-- Email: mailto link; null → 'Chua cap nhat' (Elvis ?:) -->
+                        <a th:if="${student.email != null}"
+                           th:href="|mailto:*{email}|"
+                           th:text="*{email}">a@fpt.edu.vn</a>
+                        <span th:unless="${student.email != null}">Chua cap nhat</span>
+                    </dd>
+                </div>
+
+                <dt class="col-sm-3">Ngay sinh</dt>
+                <dd class="col-sm-9"
+                    th:text="|${#temporals.format(student.dateOfBirth, 'dd/MM/yyyy')} (${student.age} tuoi)|">
+                    01/01/2004 (22 tuoi)
+                </dd>
+
+                <dt class="col-sm-3">Nganh</dt>
+                <dd class="col-sm-9"
+                    th:text="|${student.major} - ${majors[student.major]}|">SE - Ky thuat phan mem</dd>
+
+                <dt class="col-sm-3">GPA</dt>
+                <dd class="col-sm-9"
+                    th:text="|${#numbers.formatDecimal(student.gpa, 1, 2)} / 10|">8.75 / 10</dd>
+
+                <dt class="col-sm-3">Xep loai</dt>
+                <dd class="col-sm-9" th:text="${student.rank}">Gioi</dd>
+
+                <dt class="col-sm-3">Hoc bong</dt>
+                <dd class="col-sm-9">
+                    <span th:if="${student.gpa ge 8.0 and student.active}"
+                          class="text-success fw-semibold">Du dieu kien xet hoc bong</span>
+                    <span th:unless="${student.gpa ge 8.0 and student.active}"
+                          class="text-muted">Khong du dieu kien</span>
+                </dd>
+            </dl>
+        </div>
+
+        <div class="card-footer d-flex gap-2">
+            <!-- TODO 14.5: th:href for back and edit buttons -->
+            <a th:href="@{/students}" class="btn btn-secondary">← Quay lai</a>
+            <a th:href="@{/students/{id}/edit(id=${student.id})}" class="btn btn-warning">Sua</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>
