@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<!-- TODO 9.1: layout:decorate applied above -->
+<head>
+    <title>Danh sach sinh vien</title>
+</head>
+<body>
+<section layout:fragment="content">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Danh sach sinh vien</h2>
+        <!-- TODO 9.2: th:href to /students/new -->
+        <a th:href="@{/students/new}" class="btn btn-primary">+ Them sinh vien</a>
+    </div>
+
+    <!-- TODO 9.3: Search form GET /students; keep keyword value -->
+    <form class="row g-2 mb-3" th:action="@{/students}" method="get">
+        <div class="col-md-6">
+            <input type="text" name="keyword" class="form-control"
+                   placeholder="Tim theo ma SV hoac ho ten..."
+                   th:value="${keyword}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-primary">Tim kiem</button>
+        </div>
+        <div class="col-auto" th:if="${keyword != null and !keyword.isBlank()}">
+            <a th:href="@{/students}" class="btn btn-outline-secondary">Xoa bo loc</a>
+        </div>
+    </form>
+
+    <!-- TODO 9.4: Show result count when keyword is not empty -->
+    <p class="text-muted" th:if="${!#strings.isEmpty(keyword)}"
+       th:text="|Tim thay ${totalStudents} sinh vien cho tu khoa: ${keyword}|"></p>
+
+    <!-- TODO 10: Statistics cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card stat-card text-bg-primary">
+                <div class="card-body">
+                    <div>Tong so sinh vien</div>
+                    <div class="value" th:text="${totalStudents}">0</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card text-bg-success">
+                <div class="card-body">
+                    <div>GPA trung binh</div>
+                    <div class="value" th:text="${#numbers.formatDecimal(avgGpa, 1, 2)}">0.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card text-bg-info">
+                <div class="card-body">
+                    <div>Dang hoc</div>
+                    <div class="value" th:text="${#lists.size(students.?[active])}">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TODO 13.1: Empty list warning -->
+    <div class="alert alert-warning" th:if="${#lists.isEmpty(students)}">
+        Khong co sinh vien nao.
+    </div>
+
+    <div class="table-responsive" th:unless="${#lists.isEmpty(students)}">
+        <table class="table table-bordered table-hover align-middle bg-white">
+            <thead class="table-dark">
+            <tr>
+                <th>#</th><th>Ma SV</th><th>Ho ten</th><th>Email</th><th>Ngay sinh</th>
+                <th>Tuoi</th><th>Nganh</th><th>GPA</th><th>Xep loai</th><th>Trang thai</th><th>Thao tac</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- TODO 11 + TODO 12 + TODO 13.2 -->
+            <tr th:each="s, stat : ${students}"
+                th:classappend="${s.gpa lt 5} ? 'table-danger'">
+                <!-- # -->
+                <td th:text="${stat.count}">1</td>
+                <!-- Ma SV -->
+                <td th:text="${s.studentCode}">SE180001</td>
+                <!-- Ho ten – IN HOA -->
+                <td th:text="${#strings.toUpperCase(s.fullName)}">NGUYEN VAN AN</td>
+                <!-- Email -->
+                <td th:text="${s.email}">a@fpt.edu.vn</td>
+                <!-- Ngay sinh -->
+                <td th:text="${#temporals.format(s.dateOfBirth, 'dd/MM/yyyy')}">01/01/2004</td>
+                <!-- Tuoi -->
+                <td th:text="${s.age}">22</td>
+                <!-- Nganh – tra Map -->
+                <td th:text="${majors[s.major]}">Ky thuat phan mem</td>
+                <!-- GPA -->
+                <td th:text="${#numbers.formatDecimal(s.gpa, 1, 2)}">8.00</td>
+                <!-- Xep loai – badge theo rank (TODO 12) -->
+                <td>
+                    <span th:switch="${s.rank}">
+                        <span th:case="'Xuat sac'" class="badge text-bg-success"   th:text="${s.rank}">Xuat sac</span>
+                        <span th:case="'Gioi'"     class="badge text-bg-primary"   th:text="${s.rank}">Gioi</span>
+                        <span th:case="'Kha'"      class="badge text-bg-info"      th:text="${s.rank}">Kha</span>
+                        <span th:case="'Trung binh'" class="badge text-bg-warning" th:text="${s.rank}">Trung binh</span>
+                        <span th:case="*"          class="badge text-bg-danger"    th:text="${s.rank}">Yeu</span>
+                    </span>
+                </td>
+                <!-- Trang thai – ternary (TODO 12) -->
+                <td>
+                    <span th:if="${s.active}"     class="badge text-bg-success">Dang hoc</span>
+                    <span th:unless="${s.active}" class="badge text-bg-secondary">Bao luu</span>
+                </td>
+                <!-- Thao tac (TODO 13.2) -->
+                <td>
+                    <a th:href="@{/students/{id}(id=${s.id})}"
+                       class="btn btn-sm btn-outline-info">Xem</a>
+                    <a th:href="@{/students/{id}/edit(id=${s.id})}"
+                       class="btn btn-sm btn-outline-warning">Sua</a>
+                    <form th:action="@{/students/{id}/delete(id=${s.id})}"
+                          method="post" class="d-inline"
+                          onsubmit="return confirm('Ban co chac muon xoa sinh vien nay?')">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Xoa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+</body>
+</html>
