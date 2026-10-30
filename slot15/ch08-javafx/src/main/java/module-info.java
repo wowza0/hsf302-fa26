@@ -18,12 +18,12 @@ module com.fu.ch08 {
     exports com.fu.ch08.b2;
     exports com.fu.ch08.b3;
     exports com.fu.ch08.b4;
-    exports com.fu.ch08.b5;
+    /*exports com.fu.ch08.b5;
     exports com.fu.ch08.b6;
     exports com.fu.ch08.t1;
     exports com.fu.ch08.t2;
     exports com.fu.ch08.t3;
     exports com.fu.ch08.t4;
     exports com.fu.ch08.t5;
-    exports com.fu.ch08.t6;
+    exports com.fu.ch08.t6;*/
 }

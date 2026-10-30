@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.fu.ch08.b5.LayoutController" prefWidth="1000" prefHeight="640">
+    <top>
+        <MenuBar>
+            <Menu text="File"><MenuItem text="Thoát" onAction="#handleExit" accelerator="Shortcut+Q"/></Menu>
+            <Menu text="View"><CheckMenuItem fx:id="miSidebar" text="Hiện sidebar" selected="true"/></Menu>
+        </MenuBar>
+    </top>
+    <left>
+        <Accordion fx:id="accordion" prefWidth="180">
+            <panes>
+                <TitledPane fx:id="tpBasic" text="Cơ bản">
+                    <VBox spacing="6">
+                        <Button text="FlowPane" maxWidth="Infinity" onAction="#showFlow"/>
+                        <Button text="TilePane" maxWidth="Infinity" onAction="#showTile"/>
+                        <Button text="GridPane" maxWidth="Infinity" onAction="#showGrid"/>
+                    </VBox>
+                </TitledPane>
+                <TitledPane text="Nâng cao">
+                    <VBox spacing="6">
+                        <Button text="AnchorPane" maxWidth="Infinity" onAction="#showAnchor"/>
+                        <Button text="SplitPane" maxWidth="Infinity" onAction="#showSplit"/>
+                        <Button text="ScrollPane" maxWidth="Infinity" onAction="#showScroll"/>
+                    </VBox>
+                </TitledPane>
+            </panes>
+        </Accordion>
+    </left>
+    <center>
+        <StackPane fx:id="centerPane" style="-fx-padding: 10; -fx-background-color: #fafafa;"/>
+    </center>
+    <right>
+        <VBox fx:id="sidebar" prefWidth="220" spacing="8" style="-fx-padding: 10; -fx-background-color: #eef3fb;">
+            <Label text="Mô tả" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblDescription" wrapText="true"/>
+        </VBox>
+    </right>
+    <bottom>
+        <HBox spacing="20" style="-fx-padding: 4 10; -fx-background-color: #ddd;">
+            <Label fx:id="lblStatus"/>
+            <Label fx:id="lblSize"/>
+        </HBox>
+    </bottom>
+</BorderPane>

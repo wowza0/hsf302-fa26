@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.fu.ch08.b6.SurveyController" fitToWidth="true">
+    <fx:define>
+        <ToggleGroup fx:id="tgGender"/>
+    </fx:define>
+    <GridPane hgap="12" vgap="10">
+        <padding><Insets top="20" right="24" bottom="20" left="24"/></padding>
+        <columnConstraints>
+            <ColumnConstraints minWidth="150"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="KHẢO SÁT MÔN HỌC HSF302" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #1a73e8;"
+               GridPane.columnSpan="2"/>
+
+        <Label text="MSSV *" GridPane.rowIndex="1"/>
+        <TextField fx:id="tfStudentId" promptText="SE123456" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Họ tên *" GridPane.rowIndex="2"/>
+        <TextField fx:id="tfFullName" promptText="Nguyễn Văn An" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Ngành *" GridPane.rowIndex="3"/>
+        <ChoiceBox fx:id="cbMajor" prefWidth="150" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Kỳ học" GridPane.rowIndex="4"/>
+        <Spinner fx:id="spSemester" prefWidth="100" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Giới tính *" GridPane.rowIndex="5"/>
+        <HBox spacing="15" GridPane.rowIndex="5" GridPane.columnIndex="1">
+            <RadioButton text="Nam" toggleGroup="$tgGender"/>
+            <RadioButton text="Nữ" toggleGroup="$tgGender"/>
+            <RadioButton text="Khác" toggleGroup="$tgGender"/>
+        </HBox>
+
+        <Label text="Ngày khảo sát *" GridPane.rowIndex="6"/>
+        <DatePicker fx:id="dpDate" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Mức hài lòng" GridPane.rowIndex="7"/>
+        <HBox spacing="12" alignment="CENTER_LEFT" GridPane.rowIndex="7" GridPane.columnIndex="1">
+            <Slider fx:id="slSatisfaction" prefWidth="260"/>
+            <Label fx:id="lblSatisfaction" style="-fx-font-weight: bold;"/>
+        </HBox>
+
+        <Label text="Phần thích nhất *" GridPane.rowIndex="8"/>
+        <HBox spacing="15" GridPane.rowIndex="8" GridPane.columnIndex="1">
+            <CheckBox fx:id="chkSpring" text="Spring"/>
+            <CheckBox fx:id="chkJpa" text="JPA"/>
+            <CheckBox fx:id="chkFx" text="JavaFX"/>
+            <CheckBox fx:id="chkTesting" text="Testing"/>
+        </HBox>
+
+        <Label text="Màu giao diện yêu thích" GridPane.rowIndex="9"/>
+        <ColorPicker fx:id="cpColor" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+
+        <Label text="Ngôn ngữ đã biết" GridPane.rowIndex="10"/>
+        <VBox spacing="6" GridPane.rowIndex="10" GridPane.columnIndex="1">
+            <HBox spacing="8">
+                <ComboBox fx:id="cbLanguage" promptText="Chọn hoặc gõ ngôn ngữ" prefWidth="220"/>
+                <Button text="Thêm" onAction="#handleAddLanguage"/>
+            </HBox>
+            <ListView fx:id="lvLanguages" prefHeight="110"/>
+        </VBox>
+
+        <Label text="Góp ý" GridPane.rowIndex="11"/>
+        <VBox spacing="4" GridPane.rowIndex="11" GridPane.columnIndex="1">
+            <TextArea fx:id="taComment" prefRowCount="4" wrapText="true"/>
+            <Label fx:id="lblCharCount"/>
+        </VBox>
+
+        <Label text="Mức độ hoàn thành" GridPane.rowIndex="12"/>
+        <ProgressBar fx:id="pbComplete" maxWidth="Infinity" progress="0" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+
+        <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="13" GridPane.columnIndex="1">
+            <Button text="Gửi" defaultButton="true" onAction="#handleSubmit"
+                    style="-fx-background-color: #1a73e8; -fx-text-fill: white;"/>
+            <Button text="Làm lại" onAction="#handleReset"/>
+            <Hyperlink text="Xem đề cương" onAction="#handleSyllabus"/>
+        </HBox>
+    </GridPane>
+</ScrollPane>
