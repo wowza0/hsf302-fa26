@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fu.demologin.LoginController">
+    <children>
+        <!-- Cột trái: Banner / Branding -->
+        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="350.0" spacing="15.0" style="-fx-background-color: #3F51B5;">
+            <children>
+                <Label text="WELCOME" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="32.0" />
+                    </font>
+                </Label>
+                <Label text="Hệ thống quản lý ứng dụng" textFill="#e0e0e0">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+
+        <!-- Cột phải: Form đăng nhập -->
+        <VBox alignment="CENTER_LEFT" prefHeight="500.0" prefWidth="450.0" spacing="15.0" style="-fx-background-color: #FFFFFF;">
+            <padding>
+                <Insets bottom="40.0" left="50.0" right="50.0" top="40.0" />
+            </padding>
+            <children>
+                <!-- Tiêu đề Form -->
+                <Label text="Đăng nhập" textFill="#333333">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Label>
+                <Label text="Vui lòng nhập thông tin tài khoản của bạn" textFill="#757575">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </Label>
+
+                <!-- Tên đăng nhập -->
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="Tên đăng nhập / Email" textFill="#555555" />
+                        <TextField fx:id="usernameField" promptText="Nhập username hoặc email" style="-fx-pref-height: 40px; -fx-background-radius: 5px; -fx-border-color: #CCCCCC; -fx-border-radius: 5px;" />
+                    </children>
+                </VBox>
+
+                <!-- Mật khẩu -->
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="Mật khẩu" textFill="#555555" />
+                        <PasswordField fx:id="passwordField" promptText="Nhập mật khẩu" style="-fx-pref-height: 40px; -fx-background-radius: 5px; -fx-border-color: #CCCCCC; -fx-border-radius: 5px;" />
+                    </children>
+                </VBox>
+
+                <!-- Tùy chọn: Ghi nhớ & Quên mật khẩu -->
+                <HBox alignment="CENTER_LEFT" prefWidth="200.0">
+                    <children>
+                        <CheckBox fx:id="rememberCheckBox" mnemonicParsing="false" text="Ghi nhớ đăng nhập" textFill="#666666" />
+                        <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Hyperlink fx:id="forgotPasswordLink" onAction="#handleForgotPassword" style="-fx-border-color: transparent;" text="Quên mật khẩu?" />
+                            </children>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+
+                <!-- Nút đăng nhập -->
+                <Label fx:id="errorLabel" style="-fx-text-fill: red;" wrapText="true" />
+                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #3F51B5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 5px; -fx-cursor: hand;" text="ĐĂNG NHẬP">
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Button>
+
+                <!-- Đăng ký tài khoản -->
+                <HBox alignment="CENTER" prefWidth="200.0" spacing="5.0">
+                    <children>
+                        <Label text="Chưa có tài khoản?" textFill="#666666" />
+                        <Hyperlink fx:id="registerLink" onAction="#handleRegister" style="-fx-border-color: transparent;" text="Đăng ký ngay" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</HBox>
