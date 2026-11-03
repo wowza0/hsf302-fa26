@@ -1,5 +1,7 @@
 package com.example.ui.controller;
 
+import com.example.data.exception.StudentNotFoundException;
+import com.example.data.exception.ValidationException;
 import com.example.data.pojo.Student;
 import com.example.data.service.StudentService;
 import javafx.collections.FXCollections;
@@ -16,7 +18,7 @@ public class StudentController {
     @FXML private Button btnUpdate, btnDelete;
     @FXML private Label messageLabel, statusLabel;
 
-    private final StudentService studentService;   // INTERFACE, không phải StudentServiceImpl
+    private final StudentService studentService;
     private final ObservableList<Student> data = FXCollections.observableArrayList();
 
     public StudentController(StudentService studentService) {
@@ -68,10 +70,97 @@ public class StudentController {
         loadData();
     }
 
-    @FXML private void handleAdd()     { }
-    @FXML private void handleUpdate()  { }
-    @FXML private void handleDelete()  { }
-    @FXML private void handleClear()   { }
+    @FXML
+    private void handleAdd() {
+        try {
+            Student s = readForm();
+            Student created = studentService.create(s);
+            clearForm();
+            loadData();
+            showInfo("Added: " + created.getName());
+        } catch (ValidationException | StudentNotFoundException e) {
+            showError(e.getMessage());
+        } catch (Exception e) {
+            showError("System error: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleUpdate() {
+        try {
+            Student selected = tableView.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                return;
+            }
+            Student edit = readForm();
+            edit.setId(selected.getId());
+            Student updated = studentService.update(edit);
+            clearForm();
+            loadData();
+            showInfo("Updated: " + updated.getName());
+        } catch (ValidationException | StudentNotFoundException e) {
+            showError(e.getMessage());
+        } catch (Exception e) {
+            showError("System error: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleDelete() {
+        try {
+            Student selected = tableView.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                return;
+            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm Delete");
+            alert.setHeaderText(null);
+            alert.setContentText("Delete student \"" + selected.getName() + "\"?");
+            var result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                studentService.delete(selected.getId());
+                clearForm();
+                loadData();
+                showInfo("Deleted: " + selected.getName());
+            }
+        } catch (ValidationException | StudentNotFoundException e) {
+            showError(e.getMessage());
+        } catch (Exception e) {
+            showError("System error: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleClear() {
+        clearForm();
+        messageLabel.setText("");
+    }
+
+    private void clearForm() {
+        idField.clear();
+        nameField.clear();
+        emailField.clear();
+        ageField.clear();
+        tableView.getSelectionModel().clearSelection();
+        nameField.requestFocus();
+    }
+
+    private Student readForm() {
+        String name = nameField.getText();
+        String email = emailField.getText();
+        String ageStr = ageField.getText();
+
+        if (ageStr == null || ageStr.trim().isEmpty()) {
+            throw new ValidationException("Age is required");
+        }
+        int age;
+        try {
+            age = Integer.parseInt(ageStr.trim());
+        } catch (NumberFormatException e) {
+            throw new ValidationException("Age must be a number");
+        }
+        return new Student(name, email, age);
+    }
 
     private void fillForm(Student s) {
         if (s == null) {
