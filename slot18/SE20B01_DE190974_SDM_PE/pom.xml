@@ -11,7 +11,7 @@
 	<groupId>fu.de190974</groupId>
 	<artifactId>SE20B01_DE190974_SDM_PE</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
+	<categoryName/>
 	<description/>
 	<url/>
 	<licenses>
@@ -26,9 +26,11 @@
 		<tag/>
 		<url/>
 	</scm>
-	<properties>
-		<java.version>21</java.version>
-	</properties>
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
