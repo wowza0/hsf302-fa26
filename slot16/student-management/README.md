@@ -155,3 +155,4 @@ Inline validation error messages displayed in red upon invalid inputs.
 ### 04. Delete Confirmation
 Confirmation dialog before removing a student record from the database.
 ![Delete Confirmation](docs/screenshots/04-delete-confirm.png)
+

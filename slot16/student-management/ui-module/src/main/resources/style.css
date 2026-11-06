@@ -7,3 +7,4 @@
 .button:disabled { -fx-opacity: 0.45; }
 .table-view  { -fx-border-color: #bdc3c7; }
 .msg         { -fx-padding: 5; -fx-font-style: italic; }
+
